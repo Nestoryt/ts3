@@ -51,6 +51,49 @@ func ChannelList() Command {
 	}
 }
 
+func ServerInfo() Command {
+	return Command{
+		Command: "serverinfo",
+	}
+}
+
+func Nickname(name string) Command {
+	 return Command {
+	 	Command: "clientupdate",
+	 	Params: map[string] []string {
+	 		"client_nickname": []string{name},
+	 	},
+	 }
+}
+
+func SendMsg(msg string, targetmode int, target int) Command {
+	return Command {
+		Command: "sendtextmessage",
+		Params: map[string] [] string {
+		   "targetmode": []string{strconv.Itoa(targetmode)},
+		   "target": []string{strconv.Itoa(target)},
+		   "msg": []string{msg},
+		},
+	}
+
+}
+
+func ChannelCreate(c Channel) Command {
+
+	return Command{
+		Command: "channelcreate",
+		Params: map[string] []string {
+			"channel_name": []string{c.ChannelName},
+			"channel_password": []string{c.ChannelPassword},
+			"channel_codec": []string{strconv.Itoa(c.ChannelCodec)},
+			"channel_flag_permanent": []string{strconv.Itoa(c.ChannelFlagPermanent)},
+			"channel_flag_semi_permanent": []string{strconv.Itoa(c.ChannelFlagSemiPermanent)},
+			"channel_codec_quality": []string{strconv.Itoa(c.ChannelCodecQuality)},
+		},
+	}
+
+}
+
 func (client *Client) WalkClients(step func(int, map[string]string)) (err error) {
 
 	var res Response
